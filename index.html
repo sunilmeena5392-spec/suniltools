@@ -1,0 +1,210 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>All-in-One Image & PDF Tools — Sunil Tools Hub</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.172/pdf.min.js"></script>
+</head>
+<body>
+  <header>
+    <div style="display:flex;align-items:center;gap:12px">
+      <img src="assets/logo.svg" alt="logo" style="height:48px"/>
+      <div>
+        <h1 style="margin:0">Sunil Tools Hub</h1>
+        <p style="margin:0;font-size:13px">Image & PDF tools — organized for students and office use</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <nav id="tools-nav">
+      <button data-tool="idcard" class="active">ID Card Maker</button>
+      <button data-tool="passport">Passport Photo Maker</button>
+      <button data-tool="resize">Image Resize</button>
+      <button data-tool="photopdf">Photo → PDF</button>
+      <button data-tool="mergepdf">Merge PDFs</button>
+      <button data-tool="pdf2images">PDF → JPG/PNG (Images)</button>
+      <button data-tool="splitpdf">Split PDF (pages as PDFs)</button>
+      <button data-tool="compress">Compress Image (basic)</button>
+      <button data-tool="crop">Crop Image</button>
+      <button data-tool="rotate">Rotate Image</button>
+      <button data-tool="watermark">Watermark</button>
+      <button data-tool="qr">QR Generator</button>
+      <button data-tool="signature">Signature Maker</button>
+      <button data-tool="certificate">Certificate Maker</button>
+      <button data-tool="convert">JPG → PNG</button>
+      <button data-tool="about">About / Setup</button>
+    </nav>
+
+    <!-- TOOL PANELS -->
+    <section id="panel-container">
+      <!-- ID CARD MAKER -->
+      <section id="idcard" class="panel active">
+        <h2>ID Card Maker</h2>
+        <form id="id-form">
+          <label>Full Name: <input name="name" required /></label>
+          <label>Role: <input name="role" /></label>
+          <label>ID Number: <input name="idnum" /></label>
+          <label>Upload Photo: <input type="file" id="id-photo" accept="image/*" /></label>
+          <button id="generate-id">Generate ID (PDF)</button>
+        </form>
+        <div id="id-preview" class="preview"></div>
+      </section>
+
+      <!-- PASSPORT -->
+      <section id="passport" class="panel">
+        <h2>Passport Photo Maker (35×45 mm)</h2>
+        <input type="file" id="passport-file" accept="image/*" />
+        <label>Background: <input id="passport-bg" type="color" value="#ffffff" /></label>
+        <button id="make-passport">Create Passport Photo (download)</button>
+        <div id="passport-preview" class="preview"></div>
+      </section>
+
+      <!-- RESIZE -->
+      <section id="resize" class="panel">
+        <h2>Image Resize</h2>
+        <input type="file" id="resize-file" accept="image/*" />
+        <label>Width (px): <input id="resize-w" type="number" value="800" /></label>
+        <label>Height (px): <input id="resize-h" type="number" value="600" /></label>
+        <button id="do-resize">Resize & Download</button>
+        <div id="resize-preview" class="preview"></div>
+      </section>
+
+            <!-- PHOTO TO PDF -->
+      <section id="photopdf" class="panel">
+        <h2>Image → PDF (JPG/PNG → PDF)</h2>
+        <input type="file" id="photos-to-pdf" accept="image/*" multiple />
+        <button id="photos-to-pdf-go">Create PDF (download)</button>
+        <div id="photopdf-preview" class="preview"></div>
+      </section>
+
+
+      <!-- PDF TO IMAGES -->
+      <section id="pdf2images" class="panel">
+        <h2>PDF → Images (JPG / PNG)</h2>
+        <p>Extract each PDF page as an image (choose format JPG or PNG). Outputs a zipped download of images.</p>
+        <input type="file" id="pdf2images-file" accept="application/pdf" />
+        <label>Format: <select id="pdf2images-format"><option value="image/jpeg">JPG</option><option value="image/png">PNG</option></select></label>
+        <button id="pdf2images-go">Extract Images & Download ZIP</button>
+        <div id="pdf2images-preview" class="preview"></div>
+      </section>
+
+      <!-- SPLIT PDF -->
+      <section id="splitpdf" class="panel">
+        <h2>Split PDF (Pages → separate PDFs)</h2>
+        <p>Split a PDF into single-page PDFs and download as a ZIP.</p>
+        <input type="file" id="splitpdf-file" accept="application/pdf" />
+        <button id="splitpdf-go">Split & Download ZIP</button>
+        <div id="splitpdf-preview" class="preview"></div>
+      </section>
+
+      <!-- MERGE PDF -->
+      <section id="mergepdf" class="panel">
+        <h2>Merge PDFs (Client-side)</h2>
+        <input type="file" id="pdf-merge-files" accept="application/pdf" multiple />
+        <button id="merge-pdfs-btn">Merge & Download</button>
+        <div id="merge-preview" class="preview"></div>
+      </section>
+
+      <!-- COMPRESS -->
+      <section id="compress" class="panel">
+        <h2>Compress Image (Basic)</h2>
+        <input type="file" id="compress-file" accept="image/*" />
+        <label>Quality (0.1 - 1): <input id="compress-q" type="number" step="0.1" min="0.1" max="1" value="0.8" /></label>
+        <button id="compress-go">Compress & Download (JPEG)</button>
+        <div id="compress-preview" class="preview"></div>
+      </section>
+
+      <!-- CROP -->
+      <section id="crop" class="panel">
+        <h2>Crop Image (manual)</h2>
+        <input type="file" id="crop-file" accept="image/*" />
+        <label>Crop X: <input id="crop-x" type="number" value="0" /></label>
+        <label>Crop Y: <input id="crop-y" type="number" value="0" /></label>
+        <label>Crop W: <input id="crop-w" type="number" value="200" /></label>
+        <label>Crop H: <input id="crop-h" type="number" value="200" /></label>
+        <button id="crop-go">Crop & Download</button>
+        <div id="crop-preview" class="preview"></div>
+      </section>
+
+      <!-- ROTATE -->
+      <section id="rotate" class="panel">
+        <h2>Rotate Image</h2>
+        <input type="file" id="rotate-file" accept="image/*" />
+        <label>Degrees: <input id="rotate-deg" type="number" value="90" /></label>
+        <button id="rotate-go">Rotate & Download</button>
+        <div id="rotate-preview" class="preview"></div>
+      </section>
+
+      <!-- WATERMARK -->
+      <section id="watermark" class="panel">
+        <h2>Watermark</h2>
+        <input type="file" id="wm-file" accept="image/*" />
+        <label>Watermark Text: <input id="wm-text" value="© Sunil Tools" /></label>
+        <button id="wm-go">Apply Watermark & Download</button>
+        <div id="wm-preview" class="preview"></div>
+      </section>
+
+      <!-- QR -->
+      <section id="qr" class="panel">
+        <h2>QR Generator</h2>
+        <label>Text/URL: <input id="qr-text" value="https://example.com" /></label>
+        <button id="qr-go">Generate & Download</button>
+        <div id="qr-preview" class="preview"></div>
+      </section>
+
+      <!-- SIGNATURE -->
+      <section id="signature" class="panel">
+        <h2>Signature Maker</h2>
+        <p>Draw signature on canvas and download PNG.</p>
+        <canvas id="sig-canvas" width="600" height="200" style="border:1px solid #ccc"></canvas><br/>
+        <button id="sig-clear">Clear</button>
+        <button id="sig-download">Download Signature</button>
+      </section>
+
+      <!-- CERTIFICATE -->
+      <section id="certificate" class="panel">
+        <h2>Certificate Maker</h2>
+        <label>Recipient Name: <input id="cert-name" /></label>
+        <label>Course/Event: <input id="cert-course" /></label>
+        <button id="cert-generate">Generate Certificate (PDF)</button>
+        <div id="cert-preview" class="preview"></div>
+      </section>
+
+      <!-- CONVERT -->
+      <section id="convert" class="panel">
+        <h2>Convert JPG → PNG</h2>
+        <input type="file" id="convert-file" accept="image/jpeg,image/jpg" />
+        <button id="convert-go">Convert & Download PNG</button>
+        <div id="convert-preview" class="preview"></div>
+      </section>
+
+      <!-- ABOUT -->
+      <section id="about" class="panel">
+        <h2>About & Setup</h2>
+        <p>Unpack ZIP, upload to any static host (GitHub Pages, Netlify, Vercel) or your own server. The site uses client-side libraries via CDN. Background removal tool removed.</p>
+        <h3>Notes</h3>
+        <ul>
+          <li>Everything runs in browser (privacy-first) except background removal which requires an external API.</li>
+          <li>To host: upload all files inside this ZIP to your web host's public folder.</li>
+          <li>If you want me to customize styles, colors, or add your logo, tell me and I'll modify files and provide a fresh ZIP.</li>
+        </ul>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <p>Sunil Tools Hub — Generated by ChatGPT for Sunil</p>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
